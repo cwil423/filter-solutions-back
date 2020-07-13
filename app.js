@@ -7,13 +7,16 @@ require('dotenv').config()
 
 const app = express();
 const oauthRoute = require('./routes/oauth');
-const apiCallRoute = require('./routes/apiCall');
+const quickbooksApiRoute = require('./routes/quickbooks');
+const mapquestApiRoute = require('./routes/mapquest');
 
 app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
+
 app.use('/oauth', oauthRoute);
-app.use('/apiCall', apiCallRoute);
+app.use('/quickbooks', quickbooksApiRoute);
+app.use('/mapquest', mapquestApiRoute)
 
 app.get('/', (req, res) => {
   res.send('home')
