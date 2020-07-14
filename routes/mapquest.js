@@ -11,7 +11,6 @@ router.use(bodyParser.json());
 router.post('/', (req, res) => {
   const customers = req.body
   const customerAddresses = customers.map(element => element.address.Line1 + ' ' + element.address.City + ' ' + element.address.CountrySubDivisionCode)
-  console.log(customerAddresses)
   axios({
     method: 'post',
     // url: `http://www.mapquestapi.com/directions/v2/optimizedroute?key=${process.env.mapquestKey}`,
