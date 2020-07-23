@@ -1,5 +1,6 @@
 const express = require('express');
 const OAuthClient = require('intuit-oauth');
+const path = require('path')
 
 const router = express.Router();
 
@@ -24,6 +25,8 @@ router.get('/', (req, res) => {
 })
 
 router.get('/callback', (req, res) => {
+  const dirPath = path.join(__dirname, '../index.html')
+
   // Parse the redirect URL for authCode and exchange them for tokens
   const parseRedirect = req.url;
  
@@ -31,8 +34,9 @@ router.get('/callback', (req, res) => {
   oauthClient
     .createToken(parseRedirect)
     .then(function (authResponse) {
+      // res.header('Access-Control-Allow-Origin', '*')
       res.cookie('secondcookie', authResponse.token.access_token);
-      res.send('cookies plz')
+      res.sendFile(dirPath)
       console.log('The Token is  ' + JSON.stringify(authResponse.getJson()));
     })
     .catch(function (e) {

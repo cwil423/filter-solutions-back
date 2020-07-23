@@ -13,6 +13,7 @@ const mongoDbRoute = require('./routes/mongoDb');
 app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/oauth', express.static('public'));
 
 app.use('/oauth', oauthRoute);
 app.use('/quickbooks', quickbooksApiRoute);
