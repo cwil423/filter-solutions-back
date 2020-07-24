@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
   res.send('home')
 })
 
-const port = process.env.port;
+const port = process.env.Port;
 
 app.listen(port, ()=> {
   console.log(`Listening on port ${port}`);
