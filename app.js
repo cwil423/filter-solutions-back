@@ -21,7 +21,7 @@ app.use('/mapquest', mapquestApiRoute)
 app.use('/mongoDb', mongoDbRoute);
 
 app.get('/', (req, res) => {
-  res.send('main.html')
+  res.send('home')
 })
 
 const port = process.env.Port;
