@@ -8,7 +8,7 @@ const router = express.Router();
 const oauthClient = new OAuthClient({
   clientId: process.env.clientId,
   clientSecret: process.env.clientSecret,
-  environment: 'sandbox',
+  environment: 'production',
   redirectUri: process.env.redirectUri,
 });
 
