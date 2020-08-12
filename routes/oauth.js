@@ -1,15 +1,28 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const OAuthClient = require('intuit-oauth');
 const path = require('path')
 
 const router = express.Router();
 
+router.use(bodyParser.json());
+
+mongoose.connect(process.env.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+
+const accessTokenSchema = new mongoose.Schema({
+  name: String,
+  value: String
+});
+
+const AccessToken = mongoose.model('accessToken', accessTokenSchema, 'accessToken');
+
 // Instance of client
 const oauthClient = new OAuthClient({
-  clientId: process.env.clientId,
-  clientSecret: process.env.clientSecret,
+  clientId: process.env.ClientId,
+  clientSecret: process.env.ClientSecret,
   environment: 'production',
-  redirectUri: process.env.redirectUri,
+  redirectUri: process.env.RedirectUri,
 });
 
 router.get('/', (req, res) => {
@@ -35,7 +48,12 @@ router.get('/callback', (req, res) => {
     .createToken(parseRedirect)
     .then(function (authResponse) {
       // res.header('Access-Control-Allow-Origin', '*')
-      res.cookie('secondcookie', authResponse.token.access_token);
+      // res.cookie('secondcookie', authResponse.token.access_token);
+      // const accessToken = new AccessToken({
+      //   name: 'accessToken',
+      //   value: authResponse.token.access_token
+      // });
+      AccessToken.updateOne({name: "accessToken"}, {value: authResponse.token.access_token}).catch(err => console.log(err));
       res.sendFile(dirPath)
       console.log('The Token is  ' + JSON.stringify(authResponse.getJson()));
     })
@@ -44,6 +62,11 @@ router.get('/callback', (req, res) => {
       console.error(e.intuit_tid);
     });
   
+})
+
+router.get('/accessToken', (req, res) => {
+  AccessToken.find()
+    .then(response => res.send(response))
 })
 
 module.exports = router;

@@ -14,9 +14,6 @@ const deliverySchema = new mongoose.Schema({
   address: String,
   date: {type: Date, default: Date.now}
 });
-const userSchema = new mongoose.Schema({
-  token: JSON
-})
 
 const Delivery = mongoose.model('delivery', deliverySchema, 'deliveries');
 
