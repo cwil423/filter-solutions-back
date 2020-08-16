@@ -1,12 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const OAuthClient = require('intuit-oauth');
 const path = require('path')
 
 const router = express.Router();
-
-router.use(bodyParser.json());
 
 mongoose.connect(process.env.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -19,10 +16,10 @@ const AccessToken = mongoose.model('accessToken', accessTokenSchema, 'accessToke
 
 // Instance of client
 const oauthClient = new OAuthClient({
-  clientId: process.env.ClientId,
-  clientSecret: process.env.ClientSecret,
-  environment: 'production',
-  redirectUri: process.env.RedirectUri,
+  clientId: process.env.clientId,
+  clientSecret: process.env.clientSecret,
+  environment: 'Production',
+  redirectUri: process.env.redirectUri,
 });
 
 router.get('/', (req, res) => {

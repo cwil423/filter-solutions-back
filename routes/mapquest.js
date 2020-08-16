@@ -1,12 +1,9 @@
 const express = require('express');
 const axios = require('axios');
-const bodyParser = require('body-parser');
 
 require('dotenv').config()
 
 const router = express.Router();
-
-router.use(bodyParser.json());
 
 router.post('/', (req, res) => {
   const customers = req.body
